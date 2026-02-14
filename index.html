@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Q3 Seatwork 2</title>
+
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+/* BODY */
+body{
+  font-family:'Gill Sans MT',sans-serif;
+  background-image:url("https://i.pinimg.com/736x/e7/51/33/e751334392715596c3ff55d9e408d890.jpg");
+  background-size:cover;
+  background-position:center;
+  background-repeat:no-repeat;
+  background-attachment:fixed;
+  margin:0;
+  padding-bottom:80px;
+  transition:.3s;
+}
+
+/* NAVBAR */
+.navbar{
+  background: linear-gradient(to right,#ff7a18,#ffb347);
+  box-shadow:0 4px 15px rgba(0,0,0,0.25);
+}
+
+h1{
+  color:white;
+  text-shadow:2px 2px 8px rgba(0,0,0,0.4);
+  font-weight:bold;
+}
+
+/* BUDGET BOX */
+#brands{
+  width:860px;
+  background: rgba(255,255,255,0.35);
+  backdrop-filter: blur(12px);
+  border-radius:25px;
+  padding:25px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.2);
+}
+
+/* INPUT */
+#budget{
+  text-align:center;
+  font-size:24px;
+  border-radius:15px;
+  border:2px solid #ff8c42;
+  color:#cc5500;
+}
+
+/* ROW FLEX */
+.row{
+  display:flex;
+  text-align:center;
+}
+.row div{
+  flex:1;
+}
+
+/* MAIN BUTTONS */
+#buttons{
+  color:white;
+  background: linear-gradient(45deg,#ff7a18,#ffb347);
+  border:none;
+  border-radius:30px;
+  width:300px;
+  font-size:20px;
+  padding:12px;
+  transition:.3s;
+  box-shadow:0 5px 15px rgba(0,0,0,0.25);
+}
+#buttons:hover{
+  transform:scale(1.07);
+}
+
+/* BRAND BUTTONS */
+#brand_btn{
+  font-size:16px;
+  background:linear-gradient(45deg,#ffd580,#ff9a3c);
+  color:white;
+  border:none;
+  border-radius:20px;
+  padding:8px 20px;
+  margin:4px;
+}
+
+/* STORE CARD HOVER */
+.storeCard:hover{
+  transform:scale(1.05);
+  box-shadow:0 0 25px gold;
+  transition:.3s;
+}
+
+/* LAPTOP GIF */
+#laptop{
+  height:65px;
+  width:65px;
+}
+
+/* FOOTER */
+.footer{
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  background: linear-gradient(to right,#ff7a18,#ffb347);
+  padding: 15px 0;
+  text-align: center;
+  font-weight: bold;
+  font-size: 18px;
+  color: white;
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- updated louder cute click sound -->
+<audio id="clickSound" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_9b345e7f4b.mp3?filename=mouse-click-1461.mp3"></audio>
+
+<nav class="navbar navbar-expand-md">
+<div class="container-fluid">
+
+<ul class="navbar-nav">
+<li class="nav-item"><a class="nav-link text-white fs-5" href="#">Shop</a></li>
+<li class="nav-item"><a class="nav-link text-white fs-5" href="#">Locate</a></li>
+</ul>
+
+<center><h1>Torchic's Product Locator ⋆𐙚₊˚⊹♡</h1></center>
+
+<button onclick="darkMode()" class="btn btn-dark">🌙</button>
+
+</div>
+</nav>
+
+<br>
+
+<center>
+<div id="brands">
+
+<form onsubmit="return false;">
+<h3>
+Want a cool new gaming laptop? ദ്ദി◝ ⩊ ◜.ᐟ
+<img id="laptop" src="https://media.tenor.com/-Pm9vgHmBuYAAAAM/cute-torchic.gif"><br>
+Enter your budget! (˶ˆᗜˆ˵)
+</h3>
+
+<input type="number" class="form-control" id="budget" placeholder="Enter here...">
+
+</form>
+</div>
+</center>
+
+<br>
+
+<div class="container">
+<div class="row">
+
+<div>
+<button id="buttons" onclick="showBrand()">Brand & Discounts (˶  >   ₃  < ˶)</button>
+<div id="brand"></div>
+</div>
+
+<div>
+<button id="buttons" onclick="showStore()">Store Location ദ്ദി(˵ •̀ ᴗ - ˵ ) ✧ </button>
+<div id="stores"></div>
+</div>
+
+<div>
+<button id="buttons" onclick="confetti()">Celebrate 🎉(˶ᵔ ᵕ ᵔ˶) ‹𝟹</button>
+</div>
+
+</div>
+</div>
+
+<script>
+
+// cute click sound function with louder volume
+function playClick(){
+  let sound = document.getElementById("clickSound");
+  sound.volume = 0.7; // louder now
+  sound.currentTime = 0; // resets for spam-click
+  sound.play();
+}
+
+// DARK MODE
+function darkMode(){
+document.body.classList.toggle("bg-dark");
+document.body.classList.toggle("text-white");
+}
+
+// BRAND + DISCOUNT
+function showBrand(){
+
+playClick();
+
+let budgetInput=document.getElementById('budget').value;
+
+if(budgetInput===""||budgetInput<=0){
+document.getElementById("brand").innerHTML="<br><b style='color:white;'>Enter valid budget 💸</b>";
+return;
+}
+
+let budget=Number(budgetInput);
+
+// random discount
+let percent=Math.floor(Math.random()*21)+10;
+let disc=budget*(percent/100);
+let finalPrice=disc.toFixed(2);
+
+// tier detector
+let tier;
+if(budget<30000){tier="Entry Laptop ˚˖𓍢ִ໋❀ 💻";}
+else if(budget<60000){tier="Gaming Laptop 𐙚";}
+else{tier="High-End Beast ⋆˙⟡";}
+
+// reaction message
+let message;
+if(budget<20000){message="Budget warrior (๑>◡<๑)";}
+else if(budget<50000){message="Nice budget ⋆𐙚₊˚⊹♡";}
+else{message="BIG SPENDER .✦ ݁˖";}
+
+document.getElementById("brand").innerHTML=
+"<br><b style='color:white;'>Recommended Brands:<br>"+
+"<button id='brand_btn'>Acer</button><br>"+
+"<button id='brand_btn'>Asus</button><br>"+
+"<button id='brand_btn'>Lenovo</button><br>"+
+"<button id='brand_btn'>Apple</button><br>"+
+"<button id='brand_btn'>Windows</button><br>"+
+"<br>You unlocked "+percent+"% discount!<br>"+
+"<kbd style='font-size:25px;background:white;color:#ff2f92;border-radius:10px;'>"+finalPrice+"</kbd><br><br>"+
+"Tier: "+tier+"<br>"+message+"</b>";
+}
+
+// STORES
+function showStore(){
+
+playClick();
+
+document.getElementById("stores").innerHTML=
+
+"<div class='storeCard' style='background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQfE6T-73yBOE3H3rIzmS-412k8mIx9D26GUg&s);background-size:cover;padding:20px;border-radius:15px;color:white;margin-bottom:20px;'>"+
+"<b>PC Express</b><br>SM Megamall Cyberzone</div>"+
+
+"<div class='storeCard' style='background-image:url(https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSZZBo78FSwHlnzViJm06W0qCiiRsjL_QMEfQ&s);background-size:cover;padding:20px;border-radius:15px;color:white;margin-bottom:20px;'>"+
+"<b>Octagon</b><br>Glorietta 2 Makati</div>"+
+
+"<div class='storeCard' style='background-image:url(https://cdn.shopify.com/s/files/1/0355/8296/7943/files/Ayala_Malls_Cloverleaf.jpg?v=1751968794);background-size:cover;padding:20px;border-radius:15px;color:white;'>"+
+"<b>Datablitz</b><br>SM Seaside Cebu</div>";
+}
+
+// CONFETTI
+function confetti(){
+for(let i=0;i<40;i++){
+let dot=document.createElement("div");
+dot.style.position="fixed";
+dot.style.width="10px";
+dot.style.height="10px";
+dot.style.background="hsl("+Math.random()*360+"deg,100%,50%)";
+dot.style.left=Math.random()*window.innerWidth+"px";
+dot.style.top="-20px";
+dot.style.borderRadius="50%";
+document.body.appendChild(dot);
+
+let fall=setInterval(()=>{
+dot.style.top=(dot.offsetTop+5)+"px";
+if(dot.offsetTop>window.innerHeight){
+dot.remove();
+clearInterval(fall);
+}
+},20);
+}
+}
+
+</script>
+
+<div class="footer">
+Lara Ferrer © 2026
+</div>
+
+</body>
+</html>
+
+
